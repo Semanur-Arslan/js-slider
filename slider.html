@@ -1,14 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JS - SLIDER</title>
     <link rel="stylesheet" type="text/css" href="/style.css" />
-</head>
-<body>
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
-    <script src="slide.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="question-slider">
+            <div class="question-container">
+            </div>
+            <div class="slider-buttons">
+                <div class="button-container">
+                    <button id="prev">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <p>Back</p>
+                </div>
+
+                <div class="button-container">
+                    <button id="next">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                    <p>Next</p>
+                </div>
+            </div>
+        </div>
+        <div class="prroduct-slider"></div>
+        <div class="counter"></div>
+    </div>
+
+
+    <script src="slider.js"></script>
 </body>
+
 </html>
