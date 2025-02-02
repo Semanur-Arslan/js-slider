@@ -2,6 +2,7 @@
     --font-family: Arial, Helvetica, sans-serif;
     --danger-color: #e60000;
     --success-color: #00b300;
+    --new-price-red: #e60000;
 }
 
 body {
@@ -224,15 +225,19 @@ p {
     margin-top: 4px;
     display:grid;
     gap:8px;
+    font-weight:bold;
   }
   
   .old-price {
     color: gray;
   }
   
-  .new-price {
-    color: #e44;
-    font-weight: bold;
+  .new-price-red {
+    color: var(--new-price-red)
+  }
+
+  .new-price-black {
+    color:black;
   }
 
   .product-name {
@@ -316,7 +321,7 @@ p {
     .view-button {
         display:none;
     
-      }
+    }
 
     .my-alert {
         width: 80%; 

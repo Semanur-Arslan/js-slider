@@ -79,11 +79,11 @@ async function fetchQuestions() {
         questions = steps;
         totalStepQuestion = steps.length;
 
-        createCounter('questions', totalStepQuestion, currentStep);
+
         renderQuestion(currentStep);
         toggleSliders();
-
-
+        createCounter('questions', totalStepQuestion, currentStep);
+        
     } catch (error) {
         console.error("Soruları getirirken bir hata oluştu:", error.message);
     }
@@ -98,21 +98,19 @@ function questionsEventListeners() {
             currentStep--;
             renderQuestion(currentStep);
             createCounter('questions', totalStepQuestion, currentStep);
-        } else if (direction === 1 && currentStep < totalStepQuestion - 1) {
+        } else if (direction === 1 ) {
             if (!isAnswerGivenForCurrentStep()) {
                 createAlert('Lütfen Cevabınızı Seçin', 'danger');
                 return;
             }
-            currentStep++;
-            renderQuestion(currentStep);
-            createCounter('questions', totalStepQuestion, currentStep);
-        } else if (direction === 1 && currentStep === totalStepQuestion - 1) {
-            if (!isAnswerGivenForCurrentStep()) {
-                createAlert('Lütfen Cevabınızı Seçin', 'danger');
-                return;
+            if(currentStep < totalStepQuestion - 1) {
+                currentStep++;
+                renderQuestion(currentStep);
+                createCounter('questions', totalStepQuestion, currentStep);
+            } else {
+                currentStep++;
+                fetchProducts();
             }
-            currentStep++;
-            fetchProducts();
         }
 
         localStorage.setItem('currentStep', currentStep);
@@ -243,16 +241,12 @@ function createAlert(message, type) {
     setTimeout(() => myAlert.remove(), 2000);
 }
 
+
 //----------------------------------------------------- PRODUCTS -----------------------------------------------------------//
-
-
 
 async function fetchProducts() {
 
     try {
-
-        isProductLoading = true
-
         const response = await fetch("/data/products.json");
         const data = await response.json();
         const filters = JSON.parse(localStorage.getItem('userAnswers')) || [];
@@ -315,7 +309,7 @@ function createProductCard(product) {
 
     const placeholder = document.createElement("div");
     placeholder.classList.add("image-placeholder");
-    placeholder.style.height = "70%";
+    placeholder.style.height = "50%";
 
     const observer = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
@@ -345,13 +339,14 @@ function createProductCard(product) {
     oldPrice.textContent = product.oldPriceText
 
     const newPrice = document.createElement("p");
-    newPrice.classList.add("new-price");
     newPrice.textContent=product.priceText
 
     if(product.oldPrice) {
         prices.append(oldPrice, newPrice);
+        newPrice.classList.add("new-price-red");
     } else {
         prices.append(newPrice);
+        newPrice.classList.add("new-price-black");
     }
 
     const viewButton = document.createElement('button')
@@ -362,7 +357,6 @@ function createProductCard(product) {
 
     return productItem;
 }
-
 
 const updateProductWidth = () => {
     const firstProduct = productsContainer.querySelector('.product-item');
@@ -383,13 +377,11 @@ function productEventListeners() {
         if (direction === -1 && currentIndex > 0) {
             currentIndex--;
             updateSlider();
-            createCounter('questions', totalProduct, currentIndex);
+            createCounter('products', totalProduct, currentIndex);
         } else if (direction === 1 && currentIndex < totalProduct - 1) {
             currentIndex++;
-            
             updateSlider();
-            createCounter('questions', totalProduct, currentIndex);
-            
+            createCounter('products', totalProduct, currentIndex);
         }
     };
 
@@ -400,7 +392,6 @@ function productEventListeners() {
 
 
 //--------------------------------------------------- INITIALIZE APP ----------------------------------------------------//
-
 
 window.addEventListener("load", () => {
     fetchQuestions();
@@ -431,8 +422,6 @@ function reset() {
     createAlert("Seçimler Sıfırlandı", "success");
 
     resetButton.classList.add('hidden');
-
-
 }
 
 
