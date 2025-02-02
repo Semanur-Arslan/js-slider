@@ -1,43 +1,53 @@
 :root {
+    --font-family: Arial, Helvetica, sans-serif;
     --danger-color: #e60000;
     --success-color: #00b300;
 }
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--font-family);
     margin: 0;
     padding: 0;
 }
 
 p {
     margin: 0;
+    padding:0;
 }
 
 .container {
-    height: 100vh;
+    min-height: 100vh;
     display:flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 12px;
+    padding: 8px 12px;
 }
 
-/* Questions Slider */
-.question-slider {
+/* Toggle Sliders */
+.hidden {
+    display: none;
+}
+
+
+/****************************************** Questions Slider ***************************************************************/
+.question-slider,
+.product-slider {
     width: 36%;
 }
 
 .question-container {
-    padding: 8px;
+    padding: 4px;
     text-align: center;
-    margin-bottom: 8px;
+    margin-bottom: 24px;
 }
 
 .question-card {
-    height: 30vh;
+    height: auto;
     display: grid;
+    gap:24px;
 }
-
 
 /* Answers */
 .answers {
@@ -66,9 +76,11 @@ p {
 
 /* Color Answers */
 .colors {
-    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+    display: flex;
     justify-items: center;
-    padding:0px 12px;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
 }
 
 .colors .answer {
@@ -115,7 +127,7 @@ p {
 /* Alert */
 .my-alert {
     position: absolute;
-    width: 24%;
+    width: 36%;
     top: 12px;
     left: 50%;
     transform: translateX(-50%);
@@ -176,8 +188,90 @@ p {
 }
 
 
+/****************************************** Product Slider ***************************************************************/
 
-/* Steps Counter */
+  .product-slider {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .products-container {
+    display: flex;
+    transition: transform 0.3s ease;
+  }
+  
+  .product-item {
+    flex: 0 0 auto; 
+    width: 100%; 
+    text-align: center;
+  }
+  
+  .product-item img {
+    width: 75%;
+    height: auto;
+  }
+
+  .product-item img[data-src] {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  .product-item img.loaded {
+    opacity: 1;
+  }
+
+  .prices {
+    margin-top: 4px;
+    display:grid;
+    gap:8px;
+  }
+  
+  .old-price {
+    color: gray;
+  }
+  
+  .new-price {
+    color: #e44;
+    font-weight: bold;
+  }
+
+  .product-name {
+    padding: 0px 4px;
+  }
+
+  .view-button {
+    margin-top:18px;
+    background-color: black;
+    color: white;
+    padding: 12px 52px;
+    border: none;
+    border-radius:36px;
+
+  }
+  
+  .product-buttons {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+  }
+  
+  .product-buttons button {
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .product-buttons button:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+
+
+  /************************************************ Steps Counter *****************************************************/
 .counter {
     display: flex;
     gap: 8px;
@@ -199,12 +293,40 @@ p {
 }
 
 
-/* Reset Button */
+/************************************************ Reset Button *****************************************************/
 .reset {
-    margin-top:12px;
+    margin:12px;
     font-size: 12px;
     text-decoration: underline;
     color: var(--danger-color);
     cursor: pointer;
-
 }
+
+/************************************************ Responsive *****************************************************/
+@media (max-width: 767px) {
+    .question-slider, .product-slider {
+        width: 100%; 
+    }
+
+    .slider-buttons .button-container button {
+        padding: 6px 24px;
+        border-radius: 36px;
+    }
+
+    .view-button {
+        display:none;
+    
+      }
+
+    .my-alert {
+        width: 80%; 
+    }
+}
+
+@media (max-width: 1024px) and (min-width: 768px) {
+    .question-slider, .product-slider {
+        width: 50%;
+    }
+}
+
+  
