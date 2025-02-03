@@ -42,9 +42,9 @@ function toggleSliders() {
 
 function toggleResetButton() {
     if (userAnswers.length > 0) {
-        resetButton.classList.remove('hidden');
+        resetButton.classList.remove('visibility');
     } else {
-        resetButton.classList.add('hidden'); 
+        resetButton.classList.add('visibility'); 
     }
 }
 
@@ -390,7 +390,6 @@ function productEventListeners() {
 }
 
 
-
 //--------------------------------------------------- INITIALIZE APP ----------------------------------------------------//
 
 window.addEventListener("load", () => {
@@ -421,9 +420,42 @@ function reset() {
     updateSlider();
     createAlert("Seçimler Sıfırlandı", "success");
 
-    resetButton.classList.add('hidden');
+    resetButton.classList.add('visibility');
 }
 
+//--------------------------------------------------- TOUCH EVENT ----------------------------------------------------//
+let startX, deltaX;
+let isSwiping = false;
 
+productsContainer.addEventListener("touchstart", startSwipe);
+productsContainer.addEventListener("touchmove", moveSwipe);
+productsContainer.addEventListener("touchend", endSwipe);
 
+productsContainer.addEventListener("mousedown", startSwipe);
+productsContainer.addEventListener("mousemove", moveSwipe);
+productsContainer.addEventListener("mouseup", endSwipe);
 
+function startSwipe(e) {
+    startX = e.touches ? e.touches[0].clientX : e.clientX;
+    isSwiping = true;
+}
+
+function moveSwipe(e) {
+    if (!isSwiping) return;
+    deltaX = (e.touches ? e.touches[0].clientX : e.clientX) - startX;
+}
+
+function endSwipe() {
+    if (Math.abs(deltaX) > 30) { 
+        if (deltaX < 0 && currentIndex < totalProduct - 1) {
+            currentIndex++;
+        } else if (deltaX > 0 && currentIndex > 0) {
+            currentIndex--;
+        }
+        createCounter('products', totalProduct, currentIndex);
+        updateSlider();
+    }
+    
+ 
+    isSwiping = false;
+}

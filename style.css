@@ -31,6 +31,10 @@ p {
     display: none;
 }
 
+.visibility {
+    visibility: hidden;
+}
+
 
 /****************************************** Questions Slider ***************************************************************/
 .question-slider,
@@ -210,6 +214,7 @@ p {
   .product-item img {
     width: 75%;
     height: auto;
+    pointer-events: none;
   }
 
   .product-item img[data-src] {
